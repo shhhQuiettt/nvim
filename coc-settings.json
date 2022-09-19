@@ -1,0 +1,8 @@
+{
+    "snippets.priority": 200,
+    "coc.preferences.formatOnSaveFiletypes": [
+        "*"
+    ],
+    "python.formatting.provider": "black",
+    "suggest.languageSourcePriority": 10
+}

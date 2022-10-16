@@ -1,8 +1,11 @@
 {
-    "snippets.priority": 200,
     "coc.preferences.formatOnSaveFiletypes": [
         "*"
     ],
     "python.formatting.provider": "black",
-    "suggest.languageSourcePriority": 10
+    "python.venvPath": ".venv",
+    "suggest.preferCompleteThanJumpPlaceholder": true,
+    "suggest.selection": "recentlyUsed",
+    "pyright.inlayHints.variableTypes": false,
+    "pyright.inlayHints.functionReturnTypes": false
 }

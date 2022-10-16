@@ -1,4 +1,3 @@
-set nocompatible            " disable compatibility to old-time vi
 set showmatch               " show matching 
 set ignorecase              " case insensitive 
 set hlsearch                " highlight search 
@@ -48,7 +47,19 @@ nmap <silent> <c-l> :wincmd l<CR>
 " map <C-t>l :tabn<CR>
 
 
+"run on f5 in python
+autocmd Filetype python inoremap <buffer> <F5> <C-o>:update<Bar>execute '!python '.shellescape(@%, 1)<CR>
+autocmd Filetype python nnoremap <buffer> <F5> <C-o>:update<Bar>execute '!python '.shellescape(@%, 1)<CR>
+
+"run on f5 in go
+autocmd Filetype go inoremap <buffer> <F5> <C-o>:update<Bar>execute '!go run '.shellescape(@%, 1)<CR>
+autocmd Filetype go nnoremap <buffer> <F5> <C-o>:update<Bar>execute '!go run '.shellescape(@%, 1)<CR>
+
+"run docker-compose up on  <Leader>dcu
+" nnoremap   <silent>   <Leader>dcu :FloatermNew! --height=0.35 --width=1  --wintype=split --position=botright docker-compose up <CR>
+nnoremap   <silent>   <Leader>dcu :FloatermNew! --height=0.35 --width=1 --wintype=split --position=botright docker-compose up<CR>
 call plug#begin("~/.config/nvim/plugged")
+
  " Plugin Section
  Plug 'morhetz/gruvbox' "color scheme
  Plug 'tpope/vim-surround' " let you sourand objects
@@ -56,17 +67,18 @@ call plug#begin("~/.config/nvim/plugged")
  Plug 'terryma/vim-multiple-cursors'   
  Plug 'preservim/nerdtree' "file tree
  Plug 'ryanoasis/vim-devicons' "icons for nerdtree
- Plug 'neoclide/coc.nvim', {'branch': 'release'} " InlelisensTogether with coc-pyright, coc-snippets, coc-prettier, coc-json, coc-go
+ Plug 'neoclide/coc.nvim', {'branch': 'release'} " InlelisensTogether with coc-pyright, coc-snippets, coc-prettier, coc-json, coc-go, coc-docker, coc-yaml
  Plug 'voldikss/vim-floaterm'
+ Plug 'akinsho/toggleterm.nvim'
  Plug 'honza/vim-snippets'
  Plug 'junegunn/fzf'
- Plug 'junegunn/fzf.vim'
+ Plug 'junegunn/fzf.vim' " Maybe the_silver_searcer (Ag) has to be installed in system
  Plug 'psf/black', { 'branch': 'stable' }
+ Plug 'tpope/vim-fugitive'
+ Plug 'jiangmiao/auto-pairs'
+ Plug 'frazrepo/vim-rainbow' " For brackets colorizer
  " Plug 'airblade/vim-rooter'
  " Plug 'mhinz/vim-startify'
- " Plug 'prettier/vim-prettier', { 'do': 'npm install' } "prettier
- " Plug 'stevearc/vim-arduino'
- " " Plug 'sudar/vim-arduino-syntax'
  " Plug 'mxw/vim-jsx' "jsx higligting
   " Plug 'mg979/vim-visual-multi', {'branch': 'master't
 call plug#end()
@@ -154,24 +166,36 @@ endfunction
 
 let g:coc_snippet_next = '<tab>'
 
+""coc-go config
+" 
+" autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+
 ""Terminal config
-nnoremap   <silent>   <Leader>nt :execute ':FloatermNew! --height=0.35 --width=1 --wintype=split --position=bottom cd '.getcwd()<CR>
-tnoremap   <silent>   <Leader>nt    <C-\><C-n>nt :FloatermNew --height=0.35 --width=1 --wintype=split --position=bottom<CR>
+nnoremap   <silent>   <Leader>nt :execute ':FloatermNew! --height=0.35 --width=1 --wintype=split --position=botright cd '.getcwd()<CR>
+tnoremap   <silent>   <Leader>nt    <C-\><C-n> :FloatermNew --height=0.35 --width=1 --wintype=split --position=botright<CR>
 let g:floaterm_keymap_prev   = '<PageUp>'
 let g:floaterm_keymap_next   = '<PageDown>'
 let g:floaterm_keymap_toggle = '<Leader>t'
 let g:floaterm_keymap_kill   = '<Leader>kt'
 
+"excape terminal with ctlr-k
 tnoremap <c-k> <C-\><C-n>:wincmd k<CR>
 
-:map <Leader>z :echo %
+
 
 "fzf config
 
 nnoremap <c-p> :Files<CR>
 
-""coc-prettier config
-" :Prettier command
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
+" " :Prettier command
+
+
+
+
+
+
 command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
 
 ""black conifg
@@ -181,6 +205,8 @@ augroup black_on_save
   autocmd BufWritePre *.py Black
 augroup end
 
+""auto-pairs config
+" let g:AutoPairsFlyMode = 1
 
 ""Django 
 "Maps on django project templates
@@ -197,7 +223,7 @@ nnoremap \0 :e settings.py<cr>
 nnoremap \9 :e urls.py<cr>
 
 fun! RelatedFile(file)
-    #This is to check that the directory looks djangoish
+    "This is to check that the directory looks djangoish
     if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
         exec "edit %:h/" . a:file
         let g:last_relative_dir = expand("%:h") . '/'
@@ -220,5 +246,8 @@ endfun
 autocmd BufEnter *.py call SetAppDir()
 
 
-" \sv Source $MYVIMRC
+"" vim-rainbow config
+let g:rainbow_active = 1
+
+"" : \sv Source $MYVIMRC
 nnoremap <Leader>sv :source $MYVIMRC<CR>

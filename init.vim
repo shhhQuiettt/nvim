@@ -251,3 +251,7 @@ let g:rainbow_active = 1
 
 "" : \sv Source $MYVIMRC
 nnoremap <Leader>sv :source $MYVIMRC<CR>
+
+"coc spell-checker
+vmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)

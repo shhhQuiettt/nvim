@@ -4,8 +4,13 @@
     ],
     "python.formatting.provider": "black",
     "python.venvPath": ".venv",
+    "cSpell.enabled": true,
     "suggest.preferCompleteThanJumpPlaceholder": true,
     "suggest.selection": "recentlyUsed",
     "pyright.inlayHints.variableTypes": false,
-    "pyright.inlayHints.functionReturnTypes": false
+    "pyright.inlayHints.functionReturnTypes": false,
+    "cSpell.userWords": [
+        "hermetization",
+        "pyplot"
+    ]
 }

@@ -200,10 +200,10 @@ command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
 
 ""black conifg
 "format on save
-augroup black_on_save
-  autocmd!
-  autocmd BufWritePre *.py Black
-augroup end
+"!!!!!!!!!!!!!!!!!!!1 augroup black_on_save
+"   autocmd!
+"   autocmd BufWritePre *.py Black
+" augroup end
 
 ""auto-pairs config
 " let g:AutoPairsFlyMode = 1

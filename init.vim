@@ -25,6 +25,7 @@ set updatetime=300 "how many ms vim wait until it triggers plugins (for coc)
 "set signcolumn=yes????? coc
 
 "save on ctrl-s
+"2 Cr is it good?
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
 inoremap <silent> <C-S>         <C-O>:update<CR>
@@ -77,6 +78,7 @@ call plug#begin("~/.config/nvim/plugged")
  Plug 'tpope/vim-fugitive'
  Plug 'jiangmiao/auto-pairs'
  Plug 'frazrepo/vim-rainbow' " For brackets colorizer
+ Plug 'buoto/gotests-vim' " gotests 
  " Plug 'airblade/vim-rooter'
  " Plug 'mhinz/vim-startify'
  " Plug 'mxw/vim-jsx' "jsx higligting
@@ -189,18 +191,14 @@ nnoremap <c-p> :Files<CR>
 
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, {'source': 'ag --hidden --ignore .git -g ""'}, <bang>0)
+
 " " :Prettier command
-
-
-
-
-
 
 command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
 
 ""black conifg
-"format on save
-"!!!!!!!!!!!!!!!!!!!1 augroup black_on_save
+" format on save
+" augroup black_on_save
 "   autocmd!
 "   autocmd BufWritePre *.py Black
 " augroup end

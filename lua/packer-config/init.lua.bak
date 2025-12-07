@@ -11,7 +11,6 @@ return require("packer").startup(function(use)
                     ]])
         end,
     })
-
     -- Let you sourand objects
     use("tpope/vim-surround")
     use("tpope/vim-eunuch")
@@ -49,12 +48,12 @@ return require("packer").startup(function(use)
         after = "nvim-cmp",
     })
 
-    use({
-        "jose-elias-alvarez/null-ls.nvim",
-        config = function()
-            require("plugins.null-ls.config")
-        end,
-    })
+    -- use({
+    --     "jose-elias-alvarez/null-ls.nvim",
+    --     config = function()
+    --         require("plugins.null-ls.config")
+    --     end,
+    -- })
     -- Autocompletion
     use({
         "hrsh7th/nvim-cmp",
@@ -103,16 +102,6 @@ return require("packer").startup(function(use)
         -- end,
     })
 
-    -- use({
-    --     "SirVer/ultisnips",
-    --     -- requires = {
-    --     --     "honza/vim-snippets",
-    --     -- },
-    --     after = "nvim-cmp",
-    -- })
-
-    -- use("honza/vim-snippets")
-
     -- Auto brackets closing
 
     use("cohama/lexima.vim")
@@ -124,15 +113,6 @@ return require("packer").startup(function(use)
             require("plugins.copilot.config")
         end,
     })
-
-    -- Jupyter client
-    -- use({
-    --     "untitled-ai/jupyter_ascending.vim",
-    --     config = function()
-    --         require("plugins.jupyter_ascending.config")
-    --     end,
-    --     cond = require("plugins.jupyter_ascending.cond"),
-    -- })
 
     -- use({ "airblade/vim-gitgutter" })
 
@@ -156,11 +136,11 @@ return require("packer").startup(function(use)
     })
 
     use({
-        "jamespeapen/Nvim-R",
+        "R-nvim/R.nvim",
         config = function()
-            require("plugins.nvim-r.config")
+            require("plugins.rnvim.config")
         end,
-        ft = { "r", "rmd", "Rmd" },
+        ft = { "r", "rmd" },
     })
 
     --treesitter
@@ -171,6 +151,14 @@ return require("packer").startup(function(use)
             require("plugins.treesitter.config")
         end,
     })
+
+    use({
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      after = "nvim-treesitter",
+      requires = "nvim-treesitter/nvim-treesitter",
+    })
+
+
 
     --debbuger
     use({
@@ -222,10 +210,16 @@ return require("packer").startup(function(use)
     })
 
     use({
-        "glacambre/firenvim",
-        config = function()
-            require("plugins.firenvim.config")
-        end,
-        build = ":call firenvim#install(0)",
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+        ft = { "markdown" },
     })
+
+
+    -- use({
+    --     "luk400/vim-jukit",
+    --     config = function()
+    --         require("plugins.jukit.config")
+    --     end,
+    -- })
 end)

@@ -1,8 +1,7 @@
 local g = vim.g
 local o = vim.o
 
-o.showmatch = true  -- show matching
-
+g.loaded_matchparen = false
 o.ignorecase = true -- case insensitive
 o.hlsearch = true   -- highlight search
 o.incsearch = true  -- incremental search
@@ -36,3 +35,19 @@ o.updatetime = 300           -- how many ms vim wait untill it triggers plugins 
 
 o.signcolumn = "yes"
 o.termguicolors = true
+
+-- float border have no backgroun
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = function()
+        -- Set the FloatBorder to have no background (transparent)
+        vim.api.nvim_set_hl(0, "FloatBorder", { bg = "NONE" })
+        
+        -- Optional: Ensure normal text in the border matches normal text
+        vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
+    end,
+})
+
+-- print something
+print("init.lua loaded")
+

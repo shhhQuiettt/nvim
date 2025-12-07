@@ -82,6 +82,31 @@ dap.configurations.c = {
     },
 }
 
+dap.configurations.cpp = {
+    {
+        name = "Launch file",
+        type = "cppdbg",
+        request = "launch",
+        program = function()
+            -- If makefile is present  and make run exists use make run
+            if vim.fn.filereadable("Makefile") == 1 and vim.fn.system("grep -q 'run' Makefile") == 0 then
+                return "make run"
+            end
+
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopAtEntry = true,
+        setupCommands = {
+            {
+                text = "-enable-pretty-printing", -- Pretty-printing for GDB
+                description = "enable pretty printing",
+                ignoreFailures = false,
+            },
+        },
+    },
+}
+
 -- if .venv exists then .venv/bin/python
 
 require("dap-python").setup()

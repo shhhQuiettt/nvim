@@ -1,14 +1,15 @@
-function _G.ReloadConfig()
+
+function ReloadConfig()
   for name,_ in pairs(package.loaded) do
-    if name:match('^user') and not name:match('nvim-tree') then
+    -- Optional: Only clear your own config modules (starts with 'user' or similar)
+    -- if name:match('^user') then
       package.loaded[name] = nil
-    end
+    -- end
   end
 
   dofile(vim.env.MYVIMRC)
-  vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
+  print("Reloaded Configuration")
 end
 
-local keymap = vim.keymap.set
-keymap("n", "<leader>sv", ":luafile $MYVIMRC<CR>", { noremap = true, silent = false }) 
-
+-- Map it to a key (e.g., <Leader>r)
+vim.keymap.set('n', '<leader>rc', '<cmd>lua ReloadConfig()<CR>')

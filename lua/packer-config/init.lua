@@ -97,6 +97,7 @@ return require("packer").startup(function(use)
    })
 
 
+
    --debbuger
    use({
        "mfussenegger/nvim-dap",
@@ -109,6 +110,14 @@ return require("packer").startup(function(use)
        },
    })
 
+
+   use({
+       "R-nvim/R.nvim",
+       config = function()
+           require("plugins.rnvim.config")
+       end,
+       ft = { "r", "rmd" },
+   })
 
 end)
 --    -- Colorscheme
@@ -142,13 +151,6 @@ end)
 --        ft = { "c", "cpp" },
 --    })
 
---    use({
---        "R-nvim/R.nvim",
---        config = function()
---            require("plugins.rnvim.config")
---        end,
---        ft = { "r", "rmd" },
---    })
 
 --    --treesitter
 
